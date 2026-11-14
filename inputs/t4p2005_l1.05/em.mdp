@@ -1,0 +1,9 @@
+integrator        = steep
+emtol             = 500
+nsteps            = 5000
+cutoff-scheme     = Verlet
+coulombtype       = PME
+rcoulomb          = 0.9
+vdwtype           = Cut-off
+rvdw              = 0.9
+DispCorr          = EnerPres

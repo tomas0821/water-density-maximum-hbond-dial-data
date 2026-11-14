@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use these data, please cite them as below."
+type: dataset
+title: "Water's density maximum under a hydrogen-bond dial: molecular dynamics data for charge-scaled TIP4P/2005, SPC/E and TIP3P"
+authors:
+  - family-names: "Rojas Solorzano"
+    given-names: "Tomás"
+    orcid: "https://orcid.org/0000-0001-5745-4255"
+    affiliation: "Sede de Occidente, Universidad de Costa Rica"
+license: CC-BY-4.0
+repository-code: "https://github.com/tomas0821/water-density-maximum-hbond-dial-data"
+date-released: "2026-11-14"
+keywords:
+  - water
+  - density maximum
+  - molecular dynamics
+  - TIP4P/2005
+  - hydrogen bonds
+  - physics education

@@ -1,0 +1,42 @@
+; TIP4P/2005 with partial charges scaled by lam = 0.925
+; q_H = +0.514670 e, q_M = -1.029340 e (original: +0.5564, -1.1128)
+[ defaults ]
+; nbfunc  comb-rule  gen-pairs  fudgeLJ  fudgeQQ
+  1        2          no         1.0      1.0
+
+[ atomtypes ]
+; name     at.num  mass      charge  ptype  sigma(nm)  epsilon(kJ/mol)
+  OW_t4p   8       15.9994   0.0     A      0.315890   0.774908
+  HW_t4p   1        1.0080   0.0     A      0.000000   0.000000
+  MW       0        0.0000   0.0     D      0.000000   0.000000
+
+[ moleculetype ]
+; molname  nrexcl
+  SOL      2
+
+[ atoms ]
+; nr  type    resnr  residue  atom  cgnr  charge       mass
+  1   OW_t4p  1      SOL      OW    1      0.000000    15.9994
+  2   HW_t4p  1      SOL      HW1   1     +0.514670     1.0080
+  3   HW_t4p  1      SOL      HW2   1     +0.514670     1.0080
+  4   MW      1      SOL      MW    1     -1.029340     0.0000
+
+[ settles ]
+; OW  funct  doh      dhh
+  1   1      0.09572  0.15139007
+
+[ virtual_sites3 ]
+; site  from      funct  a           b
+  4     1  2  3   1      0.13193777  0.13193777
+
+[ exclusions ]
+  1 2 3 4
+  2 1 3 4
+  3 1 2 4
+  4 1 2 3
+
+[ system ]
+TIP4P/2005 lam=0.925
+
+[ molecules ]
+SOL 1000
