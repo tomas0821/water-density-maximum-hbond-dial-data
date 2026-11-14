@@ -329,7 +329,8 @@ def main():
             fig.subplots_adjust(left=0.055, right=0.995, bottom=0.20, top=0.88)
         else:
             fig.tight_layout()
-        fig.savefig(os.path.join(BASE, "figures", "fig4_structure.pdf")); fig.savefig(os.path.join(BASE, "figures", "fig4_structure.png"), dpi=300)
+        # dpi=600 for the PDF as well: the snapshot images (c, d) are resampled to it (default 100 dpi = 130 px)
+        fig.savefig(os.path.join(BASE, "figures", "fig4_structure.pdf"), dpi=600); fig.savefig(os.path.join(BASE, "figures", "fig4_structure.png"), dpi=300)
         plt.close(fig)
 
 
