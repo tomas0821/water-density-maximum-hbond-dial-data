@@ -1,0 +1,16 @@
+{
+ "t4p2005_l1.00_T260": {
+  "hb_mean": 3.84,
+  "frac4": 0.701,
+  "interstitial_pairs_per_molecule": 0.242,
+  "frac_with_interstitial": 0.373,
+  "R_INT_nm": 0.33
+ },
+ "t4p2005_l0.85_T190": {
+  "hb_mean": 3.616,
+  "frac4": 0.538,
+  "interstitial_pairs_per_molecule": 0.469,
+  "frac_with_interstitial": 0.581,
+  "R_INT_nm": 0.33
+ }
+}

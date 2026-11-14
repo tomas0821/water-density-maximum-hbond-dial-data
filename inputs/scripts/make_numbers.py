@@ -16,6 +16,7 @@ Macro names (LaTeX names cannot contain digits, so the dial value is spelled out
 Keys: OneOhFive, One, NineSevenFive, NineFive, NineTwoFive, Nine, EightFive, SPCE, TIPthree
 """
 import csv
+import json
 import os
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -314,6 +315,16 @@ def main():
     for model, key in KEYS.items():
         ts = sorted(int(d["T_K"]) for d in dens if d["model"] == model)
         out.append(f"\\newcommand{{\\Trange{key}}}{{{f'{ts[0]}--{ts[-1]}' if ts else '?'}}}")
+    # OVITO snapshots of Fig. 4(c,d): one final configuration each (figures/ovito/render_snapshots.py)
+    snap_file = os.path.join(BASE, "data", "snapshots", "snapshot_stats.json")
+    if os.path.exists(snap_file):
+        snap = json.load(open(snap_file))
+        for run, key in (("t4p2005_l1.00_T260", "One"), ("t4p2005_l0.85_T190", "Weak")):
+            s = snap[run]
+            out.append(f"\\newcommand{{\\snapPairs{key}}}{{{s['interstitial_pairs_per_molecule']:.2f}}}")
+            out.append(f"\\newcommand{{\\snapFrac{key}}}{{{100 * s['frac_with_interstitial']:.0f}}}")
+            out.append(f"\\newcommand{{\\snapHB{key}}}{{{s['hb_mean']:.2f}}}")
+        out.append(f"\\newcommand{{\\snapRint}}{{{10 * snap['t4p2005_l1.00_T260']['R_INT_nm']:.1f}}}")
     with open(os.path.join(BASE, "manuscript", "numbers.tex"), "w") as fh:
         fh.write("\n".join(out) + "\n")
     print("\n".join(out))

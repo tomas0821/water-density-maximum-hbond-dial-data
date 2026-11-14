@@ -258,7 +258,15 @@ def main():
     # ---------------------------------------------------------- fig 4: structure
     have_struct = any("hb_mean" in p[1] for m in DIAL if m in models for p in models[m])
     if have_struct:
-        fig, (b1, b2) = plt.subplots(1, 2, figsize=(7.2, 3.1))
+        # one row: (a) bonds vs T, (b) g_OO at corresponding temperatures, (c)-(d) OVITO slabs of the liquid
+        snaps = [os.path.join(BASE, "figures", "ovito", f"snap_{r}.png") for r in ("t4p2005_l1.00_T260", "t4p2005_l0.85_T190")]
+        have_snaps = all(os.path.exists(f) for f in snaps)
+        if have_snaps:
+            fig = plt.figure(figsize=(7.2, 1.95))
+            gs = fig.add_gridspec(1, 4, width_ratios=[1.12, 1.12, 1.0, 1.0], wspace=0.30)
+            b1, b2 = fig.add_subplot(gs[0]), fig.add_subplot(gs[1])
+        else:
+            fig, (b1, b2) = plt.subplots(1, 2, figsize=(7.2, 3.1))
         # (a) hydrogen bonds per molecule; triangles: value at each model's density maximum
         at_max = []
         for m in DIAL_SUB + ["spce", "tip3p"]:
@@ -269,7 +277,10 @@ def main():
                 continue
             col = DIAL_COL.get(m, STD_COL.get(m))
             T = np.array([p[0] for p in pts]); hb = np.array([p[1]["hb_mean"] for p in pts])
-            b1.plot(T - 273.15, hb, "o", ms=3.0, lw=1, color=col, label=label_of(m),
+            lab_m = label_of(m).replace(" (TIP4P/2005)", "") if have_snaps else label_of(m)
+            # with the snapshots the dial colors are labeled once, in (b); (a) labels only the dashed SPC/E and TIP3P
+            b1.plot(T - 273.15, hb, "o", ms=2.6 if have_snaps else 3.0, lw=1, color=col,
+                    label=("_" + lab_m) if (have_snaps and m.startswith("t4p")) else lab_m,
                     ls="-" if m.startswith("t4p") else "--")
             d = tmd.get(m, {})
             if d.get("status") == "ok" and T.min() <= d["tmd"] <= T.max():      # interpolate, never extrapolate
@@ -278,7 +289,13 @@ def main():
         if at_max:
             b1.axhline(np.mean(at_max), color="0.5", lw=0.8, ls=":")
         b1.set_xlabel("temperature (°C)"); b1.set_ylabel("hydrogen bonds per molecule")
-        b1.legend(frameon=False, fontsize=6.8, ncol=2, loc="lower left"); b1.set_title("(a)", loc="left", fontsize=9.5)
+        if have_snaps:
+            b1.set_ylim(2.93, None)
+            b1.legend(frameon=False, fontsize=6.3, loc="lower right", handlelength=1.8, borderaxespad=0.3)
+            b1.text(0.97, 0.235, "colors as in (b)", transform=b1.transAxes, fontsize=6.3, ha="right", color="0.3")
+        else:
+            b1.legend(frameon=False, fontsize=6.8, ncol=2, loc="lower left", handlelength=1.6, columnspacing=0.8)
+        b1.set_title("(a)", loc="left", fontsize=9.5)
         # (b) at corresponding temperatures T = lambda^2 * Tref (Eq. 6 of the paper): the settings then differ only in
         # the depth of the Lennard-Jones well (eps/lambda^2), so the panel isolates its effect. Nearest simulated T.
         Tref = float(sys.argv[1]) if len(sys.argv) > 1 else 260.0
@@ -300,8 +317,19 @@ def main():
         b2.text(3.62, 0.97, "bottom of the O–O\nLennard-Jones well", transform=b2.get_xaxis_transform(), fontsize=7, va="top", color="0.3")
         b2.set_xlim(2.2, 8.0); b2.set_xlabel("oxygen–oxygen distance (Å)"); b2.set_ylabel(r"$g_\mathrm{OO}(r)$")
         b2.set_title(rf"(b) at $T = \lambda^2 \times {Tref:.0f}$ K", loc="left", fontsize=9.5)
-        b2.legend(frameon=False, fontsize=7.5, loc="upper right", bbox_to_anchor=(1.0, 0.80))
-        fig.tight_layout(); fig.savefig(os.path.join(BASE, "figures", "fig4_structure.pdf")); fig.savefig(os.path.join(BASE, "figures", "fig4_structure.png"), dpi=200)
+        b2.legend(frameon=False, fontsize=6.0 if have_snaps else 7.5, loc="upper right", bbox_to_anchor=(1.0, 0.80), handlelength=1.4)
+        if have_snaps:
+            for k, (f, lab) in enumerate(zip(snaps, (r"(c) $\lambda$ = 1.00, 260 K", r"(d) $\lambda$ = 0.85, 190 K"))):
+                ax = fig.add_subplot(gs[2 + k])
+                ax.imshow(plt.imread(f)); ax.set_axis_off()
+                ax.set_title(lab, loc="left", fontsize=8.5)
+            for ax in (b1, b2):
+                ax.tick_params(labelsize=7); ax.xaxis.label.set_size(7.5); ax.yaxis.label.set_size(7.5)
+            b2.title.set_fontsize(8.5); b1.title.set_fontsize(8.5)
+            fig.subplots_adjust(left=0.055, right=0.995, bottom=0.20, top=0.88)
+        else:
+            fig.tight_layout()
+        fig.savefig(os.path.join(BASE, "figures", "fig4_structure.pdf")); fig.savefig(os.path.join(BASE, "figures", "fig4_structure.png"), dpi=300)
         plt.close(fig)
 
 

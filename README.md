@@ -12,6 +12,7 @@ interaction stay fixed. SPC/E and TIP3P are included for comparison.
   Lennard-Jones depth (`mapping_check.json`);
 - tables of densities, hydrogen-bond statistics, energies and diffusion coefficients, fitted temperatures of
   maximum density, and real-water reference densities (IAPWS);
+- final configurations of four runs at corresponding temperatures (drawn in the article's snapshot figure);
 - GROMACS inputs for every model and the scripts that produced every table.
 
 ## Files
@@ -22,6 +23,7 @@ interaction stay fixed. SPC/E and TIP3P are included for comparison.
 | `tmd_table.csv` | Fitted temperature of maximum density and maximum density for every model, with uncertainties (`TMD_p16_K`/`TMD_p84_K`: 16–84 % range of all Monte Carlo refits; `frac_fits_inside`: fraction of refits with an interior maximum), and the hydrogen bonds per molecule and four-bonded fraction at the maximum. `below`/`above` rows give the bound when the maximum lies outside the simulated range. |
 | `per_run_analysis.json` | Full analysis of every run, keyed `"<model>/T<K>"`: mean density `rho` and its blocking error `rho_sem` (g cm⁻³), the blocking ladder `blocking`, 100 block means of 100 ps each `rho_blocks_100ps`, hydrogen bonds `hb_mean`, tetrahedral order `q_mean`, four-bonded fraction `frac4_mean`, energy terms `E_*` (kJ mol⁻¹, whole box), diffusion coefficient `D_1e-5_cm2_s`, and the O–O pair distribution function (`r_nm`, `g_oo`). |
 | `mapping_check.json` | Same analysis for the two scaling-relation runs: standard TIP4P/2005 charges with the oxygen Lennard-Jones ε multiplied by 1/0.95² at 299.169 K and 254.848 K and 1.108033 bar, which should reproduce λ = 0.95 at 270 K and 230 K and 1 bar. |
+| `snapshots/` | Final configurations (GROMACS `.gro`, 1000 molecules) of λ = 1.00, 0.95, 0.90 and 0.85 at 260, 230, 210 and 190 K, i.e. at corresponding temperatures T = λ² × 260 K; the article's snapshot figure shows the first and the last. `snapshot_stats.json` gives, for each pictured configuration, the hydrogen bonds per molecule, the four-bonded fraction, and the non-bonded oxygen pairs closer than 3.3 Å ("interstitial" pairs) per molecule. Drawn and counted by `inputs/scripts/render_snapshots.py` (needs the OVITO 3 Python module; expects the files in `data/snapshots/`). |
 | `real_water_density_1atm.csv` | Density of real water at 1 atm, 238–330 K (IAPWS reference formulations). |
 | `activity_find_the_maximum.py` | Classroom activity: plot the data, fit a parabola, find the maximum (runs in Google Colab). The tabulated maxima use a weighted cubic over ±35 K, so the parabola's maxima differ by up to a few kelvin. |
 | `inputs/` | GROMACS topology and run files for every model (see `inputs/README.txt`) and the scripts used for the analysis (`inputs/scripts/`). |
