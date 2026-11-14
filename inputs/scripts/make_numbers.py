@@ -140,6 +140,18 @@ def main():
         rs = (ok["t4p2005_l1.05"] - t1) / (1.05 ** 2 * t1 - t1)
         out.append(f"\\newcommand{{\\ratioLo}}{{{min(rw, rs):.1f}}}")
         out.append(f"\\newcommand{{\\ratioHi}}{{{max(rw, rs):.1f}}}")
+        out.append(f"\\newcommand{{\\ratioWeak}}{{{rw:.1f}}}")      # lowering the electrostatic energy (lambda = 0.95)
+    # local slopes (K per 1 % of lambda^2) at the two ends of the dial: the T_MD(lambda^2) curve is not straight
+    if all(m in ok for m in ("t4p2005_l1.05", "t4p2005_l1.00", "t4p2005_l0.93", "t4p2005_l0.90")):
+        top = (ok["t4p2005_l1.05"] - ok["t4p2005_l1.00"]) / ((1.05 ** 2 - 1.0) * 100)
+        bot = (ok["t4p2005_l0.93"] - ok["t4p2005_l0.90"]) / ((0.925 ** 2 - 0.90 ** 2) * 100)
+        out.append(f"\\newcommand{{\\slopeLocalTop}}{{{top:.1f}}}")
+        out.append(f"\\newcommand{{\\slopeLocalBottom}}{{{bot:.1f}}}")
+    # bond count and four-bonded fraction at the maximum without the least certain setting (lambda = 0.90)
+    hb9 = [float(r["hbonds_at_TMD"]) for m, r in rows.items() if m in ok and m != "t4p2005_l0.90"]
+    f49 = [float(r["frac4_at_TMD"]) for m, r in rows.items() if m in ok and m != "t4p2005_l0.90"]
+    out.append(f"\\newcommand{{\\hbMaxNoNine}}{{{max(hb9):.2f}}}")
+    out.append(f"\\newcommand{{\\fourMaxNoNine}}{{{100 * max(f49):.0f}}}")
     if "t4p2005_l0.95" in ok:
         l2 = 0.95 ** 2
         out.append(f"\\newcommand{{\\partLamNineFive}}{{{t1 - l2 * t1:.0f}}}")                        # K

@@ -218,7 +218,7 @@ def main():
         cfit = np.polyfit(fx, fy, 1)
         xx = np.linspace(min(fx) - 0.04, max(fx) + 0.03, 10)
         a2.plot(xx, np.polyval(cfit, xx) - 273.15, color="#d94801", lw=0.9, alpha=0.6, zorder=1)
-        a2.text(0.69, 30, f"simulations: {cfit[0] / 100:.1f} K\nper 1% of bond energy", fontsize=7.5,
+        a2.text(0.69, 30, f"simulations: {cfit[0] / 100:.1f} K\nper 1% of electrostatic energy", fontsize=7.5,
                 color="#d94801", ha="left")
     a2.axhline(t_real - 273.15, color="k", lw=0.8, ls=":")
     a2.text(0.69, t_real - 273.15 + 3, "real water, 4 °C", fontsize=7.5)
@@ -298,7 +298,6 @@ def main():
         # minimum of the oxygen-oxygen Lennard-Jones potential, 2^(1/6) sigma = 3.55 A (not changed by the dial)
         b2.axvline(3.546, color="0.45", ls=":", lw=0.9)
         b2.text(3.62, 0.97, "bottom of the O–O\nLennard-Jones well", transform=b2.get_xaxis_transform(), fontsize=7, va="top", color="0.3")
-        b2.axvline(2.8, color="0.75", ls=":", lw=0.8)      # hydrogen-bonded neighbors, on the repulsive wall
         b2.set_xlim(2.2, 8.0); b2.set_xlabel("oxygen–oxygen distance (Å)"); b2.set_ylabel(r"$g_\mathrm{OO}(r)$")
         b2.set_title(rf"(b) at $T = \lambda^2 \times {Tref:.0f}$ K", loc="left", fontsize=9.5)
         b2.legend(frameon=False, fontsize=7.5, loc="upper right", bbox_to_anchor=(1.0, 0.80))
