@@ -182,7 +182,7 @@ def main():
             ax.axvline(d["tmd"] - 273.15, color=STD_COL[m], lw=0.7, ls=":")
     ax.set_xlabel("temperature (°C)"); ax.set_ylabel(r"density (g cm$^{-3}$)")
     ax.legend(frameon=False, fontsize=8)
-    fig.tight_layout(); fig.savefig(os.path.join(BASE, "figures", "fig2_models.pdf")); fig.savefig(os.path.join(BASE, "figures", "fig2_models.png"), dpi=200)
+    fig.tight_layout(); fig.savefig(os.path.join(BASE, "figures", "fig2_models.pdf")); fig.savefig(os.path.join(BASE, "figures", "fig2_models.png"), dpi=600)
     plt.close(fig)
 
     # ---------------------------------------------------------- fig 3: the dial
@@ -252,7 +252,7 @@ def main():
     hs = [handles[k] for k in order if k in handles]
     fig.legend(hs, [k for k in order if k in handles], loc="lower center", ncol=4, frameon=False, fontsize=7.5)
     fig.tight_layout(rect=(0, 0.12, 1, 1))
-    fig.savefig(os.path.join(BASE, "figures", "fig3_dial.pdf")); fig.savefig(os.path.join(BASE, "figures", "fig3_dial.png"), dpi=200)
+    fig.savefig(os.path.join(BASE, "figures", "fig3_dial.pdf")); fig.savefig(os.path.join(BASE, "figures", "fig3_dial.png"), dpi=600)
     plt.close(fig)
 
     # ---------------------------------------------------------- fig 4: structure
@@ -330,7 +330,7 @@ def main():
         else:
             fig.tight_layout()
         # dpi=600 for the PDF as well: the snapshot images (c, d) are resampled to it (default 100 dpi = 130 px)
-        fig.savefig(os.path.join(BASE, "figures", "fig4_structure.pdf"), dpi=600); fig.savefig(os.path.join(BASE, "figures", "fig4_structure.png"), dpi=300)
+        fig.savefig(os.path.join(BASE, "figures", "fig4_structure.pdf"), dpi=600); fig.savefig(os.path.join(BASE, "figures", "fig4_structure.png"), dpi=600)
         plt.close(fig)
 
 

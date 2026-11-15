@@ -9,7 +9,8 @@ authors:
     affiliation: "Sede de Occidente, Universidad de Costa Rica"
 license: CC-BY-4.0
 repository-code: "https://github.com/tomas0821/water-density-maximum-hbond-dial-data"
-date-released: "2026-11-14"
+version: "1.0.0"
+date-released: "2026-11-15"
 keywords:
   - water
   - density maximum
