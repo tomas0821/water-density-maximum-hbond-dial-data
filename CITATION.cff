@@ -10,6 +10,7 @@ authors:
 license: CC-BY-4.0
 repository-code: "https://github.com/tomas0821/water-density-maximum-hbond-dial-data"
 version: "1.0.0"
+doi: "10.5281/zenodo.24248780"
 date-released: "2026-11-15"
 keywords:
   - water

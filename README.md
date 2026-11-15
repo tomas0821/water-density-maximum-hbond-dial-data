@@ -39,7 +39,8 @@ so the six temperatures around a maximum run overnight.
 
 ## Citation
 
-See `CITATION.cff`. A DOI will be added when the dataset is archived. The accompanying article is in preparation.
+Archived on Zenodo: version 1.0.0, https://doi.org/10.5281/zenodo.24248781 (all versions:
+https://doi.org/10.5281/zenodo.24248780). See `CITATION.cff`. The accompanying article is in preparation.
 
 ## License
 
